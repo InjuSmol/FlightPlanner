@@ -1,13 +1,13 @@
-from typing import List
 from pyTPS_Transaction import pyTPS_Transaction
+from typing import List
 
 class pyTPS:
     def __init__(self):
         self.transactions: List[pyTPS_Transaction] = []
-        self.numTransactions: int = 0
-        self.mostRecentTransaction: int = -1
-        self.performingDo: bool = False
-        self.performingUndo: bool = False
+        self.numTransactions = 0
+        self.mostRecentTransaction = -1
+        self.performingDo = False
+        self.performingUndo = False
 
     def isPerformingDo(self) -> bool:
         return self.performingDo
