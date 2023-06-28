@@ -23,7 +23,7 @@ class WeightedGraph:
     def getNodeData(self, nodeId: str) -> any:
         return self.nodes.get(nodeId)
 
-    def addEdge(self, node1: str, node2: str, weight: int) -> None:
+    def addEdge(self, node1: str, node2: str, weight: float) -> None:
         edgeId = self.getEdgeId(node1, node2)
         self.edges[edgeId] = WeightedEdge(node1, node2, weight)
 
