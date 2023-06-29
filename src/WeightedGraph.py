@@ -80,7 +80,7 @@ class WeightedGraph:
                     edge = self.edges[id1]
                     if edge.get_weight() < closest_distance:
                         closest_index = i
-                        closest_distance = edge.getWeight()
+                        closest_distance = edge.get_weight()
 
             if closest_index >= 0:
                 closest_node = neighbors[closest_index]
