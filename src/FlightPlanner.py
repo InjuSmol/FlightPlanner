@@ -160,7 +160,7 @@ def init_all_airports():
 def init_edge(node1, node2):
     a1 = airport_graph.get_node_data(node1)
     a2 = airport_graph.get_node_data(node2)
-    distance = Airport.calculateDistance(a1, a2)
+    distance = Airport.calculate_distance(a1, a2)
     airport_graph.add_edge(node1, node2, distance)
     airport_graph.add_edge(node2, node1, distance)
 
