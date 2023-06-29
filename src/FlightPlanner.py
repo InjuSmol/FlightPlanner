@@ -1,6 +1,6 @@
 from Airport import Airport
-from src.tps.pyTPS import pyTPS
-from src.graph.WeightedGraph import WeightedGraph
+from pyTPS import pyTPS
+from WeightedGraph import WeightedGraph
 import readline
 from AppendStop_Transaction import AppendStop_Transaction
 import json
@@ -73,42 +73,76 @@ def displayMenu():
     text += "Q) Quit\n"
     print(text)
 
-def getUserInput(prompt):
-    answer = input(prompt)
-    return answer
+def process_user_input():
+    # GET THE USER SELECTION
+    entry = input()
 
-async def processUserInput():
-    choice = await getUserInput("-")
-    if choice == "S":
-        enteredCode = await getUserInput("\nEnter the Airport Code: ")
-        if airportGraph.nodeExists(enteredCode):
+    if entry == "S":
+        print("\nEnter the Airport Code: ")
+        entry = input()
+        if airportGraph.node_exists(entry):
             neighbors = []
-            airportGraph.getNeighbors(neighbors, enteredCode)
+            airportGraph.get_neighbors(neighbors, entry)
 
+            # MAKE SURE IT IS NOT THE SAME AIRPORT CODE AS THE PREVIOUS STOP
             if len(stops) > 0:
-                lastStop = stops[-1]
-                if lastStop == enteredCode:
+                last_stop = stops[-1]
+                if last_stop == entry:
                     print("DUPLICATE STOP ERROR - NO STOP ADDED")
                 else:
-                    transaction = AppendStop_Transaction(stops, enteredCode)
-                    tps.addTransaction(transaction)
+                    transaction = AppendStop_Transaction(stops, entry)
+                    tps.add_transaction(transaction)
             else:
-                transaction = AppendStop_Transaction(stops, enteredCode)
-                tps.addTransaction(transaction)
+                transaction = AppendStop_Transaction(stops, entry)
+                tps.add_transaction(transaction)
         else:
             print("INVALID AIRPORT CODE ERROR - NO STOP ADDED")
-    elif choice == "U":
-        tps.undoTransaction()
-    elif choice == "R":
-        tps.doTransaction()
-    elif choice == "E":
-        tps.clearAllTransactions()
-    elif choice == "Q":
+    elif entry == "U":
+        tps.undo_transaction()
+    elif entry == "R":
+        tps.do_transaction()
+    elif entry == "E":
+        tps.clear_all_transactions()
+    elif entry == "Q":
         return False
     return True
 
+# def getUserInput(prompt):
+#     answer = input(prompt)
+#     return answer
+#
+# def processUserInput():
+#     choice = getUserInput("-")
+#     if choice == "S":
+#         enteredCode = getUserInput("\nEnter the Airport Code: ")
+#         if airportGraph.nodeExists(enteredCode):
+#             neighbors = []
+#             airportGraph.getNeighbors(neighbors, enteredCode)
+#
+#             if len(stops) > 0:
+#                 lastStop = stops[-1]
+#                 if lastStop == enteredCode:
+#                     print("DUPLICATE STOP ERROR - NO STOP ADDED")
+#                 else:
+#                     transaction = AppendStop_Transaction(stops, enteredCode)
+#                     tps.addTransaction(transaction)
+#             else:
+#                 transaction = AppendStop_Transaction(stops, enteredCode)
+#                 tps.addTransaction(transaction)
+#         else:
+#             print("INVALID AIRPORT CODE ERROR - NO STOP ADDED")
+#     elif choice == "U":
+#         tps.undoTransaction()
+#     elif choice == "R":
+#         tps.doTransaction()
+#     elif choice == "E":
+#         tps.clearAllTransactions()
+#     elif choice == "Q":
+#         return False
+#     return True
+
 def initAllAirports():
-    with open('data/Flights.json', 'r') as file:
+    with open('../data/Flights.json', 'r') as file:
         airportData = json.load(file)
         for airportJSON in airportData['airports']:
             newAirport = Airport(airportJSON['code'], airportJSON['latitudeDegrees'], airportJSON['latitudeMinutes'], airportJSON['longitudeDegrees'], airportJSON['longitudeMinutes'])
@@ -131,4 +165,4 @@ while keepGoing:
     displayAirports()
     displayCurrentTrip()
     displayMenu()
-    keepGoing = await processUserInput()
+    keepGoing = process_user_input()

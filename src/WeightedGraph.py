@@ -7,17 +7,17 @@ class WeightedGraph:
         self.nodes = {}
         self.edges = {}
 
-    def getKeys(self, keys: List[str]) -> None:
+    def get_keys(self, keys: List[str]) -> None:
         testKeys = list(self.nodes.keys())
         keys.extend(testKeys)
 
-    def nodeExists(self, testNode: str) -> bool:
+    def node_exists(self, testNode: str) -> bool:
         return testNode in self.nodes
 
-    def getEdgeId(self, node1: str, node2: str) -> str:
+    def get_edge_id(self, node1: str, node2: str) -> str:
         return node1 + "-" + node2
 
-    def addNode(self, nodeId: str, nodeData: any) -> None:
+    def add_node(self, nodeId: str, nodeData: any) -> None:
         self.nodes[nodeId] = nodeData
 
     def getNodeData(self, nodeId: str) -> any:

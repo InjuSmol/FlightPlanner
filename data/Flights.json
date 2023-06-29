@@ -1,4 +1,5 @@
-"airports": [
+{
+    "airports": [
         {
             "code": "AUS",
             "latitudeDegrees": 30,
