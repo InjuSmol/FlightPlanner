@@ -68,7 +68,6 @@ def display_current_trip() -> None:
     print(text)
 
 
-
 def display_menu() -> None:
     text = "ENTER A SELECTION\n"
     text += "S) Add a Stop to your Trip\n"

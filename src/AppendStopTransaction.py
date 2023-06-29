@@ -3,7 +3,7 @@ from PyTPSTransaction import PyTPSTransaction
 
 class AppendStopTransaction(PyTPSTransaction):
     def __init__(self, init_stops, init_code):
-        super().__init__()
+        super()
         self.code = init_code
         self.trip_stops = init_stops
 
