@@ -1,42 +1,43 @@
 import math
 
-class Airport:
-    def __init__(self, code: str, latitudeDegrees: float, latitudeMinutes: float,
-                 longitudeDegrees: float, longitudeMinutes: float):
-        self.code = code
-        self.latitudeDegrees = latitudeDegrees
-        self.latitudeMinutes = latitudeMinutes
-        self.longitudeDegrees = longitudeDegrees
-        self.longitudeMinutes = longitudeMinutes
 
-    def getCode(self) -> str:
+class Airport:
+    def __init__(self, code: str, latitude_degrees: float, latitude_minutes: float,
+                 longitude_degrees: float, longitude_minutes: float):
+        self.code = code
+        self.latitude_degrees = latitude_degrees
+        self.latitude_minutes = latitude_minutes
+        self.longitude_degrees = longitude_degrees
+        self.longitude_minutes = longitude_minutes
+
+    def get_code(self) -> str:
         return self.code
 
-    def getLatitudeDegrees(self) -> float:
-        return self.latitudeDegrees
+    def get_latitude_degrees(self) -> float:
+        return self.latitude_degrees
 
-    def getLatitudeMinutes(self) -> float:
-        return self.latitudeMinutes
+    def get_latitude_minutes(self) -> float:
+        return self.latitude_minutes
 
-    def getLongitudeDegrees(self) -> float:
-        return self.longitudeDegrees
+    def get_longitude_degrees(self) -> float:
+        return self.longitude_degrees
 
-    def getLongitudeMinutes(self) -> float:
-        return self.longitudeMinutes
+    def get_longitude_minutes(self) -> float:
+        return self.longitude_minutes
 
     @staticmethod
-    def calculateDistance(a1: 'Airport', a2: 'Airport') -> float:
+    def calculate_distance(a1: 'Airport', a2: 'Airport') -> float:
         PI_F = math.pi
         RADIAN_FACTOR = 180.0 / PI_F
         EARTH_RADIUS = 3963.0
 
-        lat1 = a1.latitudeDegrees + a1.latitudeMinutes / 60.0
+        lat1 = a1.latitude_degrees + a1.latitude_minutes / 60.0
         lat1 = lat1 / RADIAN_FACTOR
-        long1 = -a1.longitudeDegrees + a1.longitudeMinutes / 60.0
+        long1 = -a1.longitude_degrees + a1.longitude_minutes / 60.0
         long1 = long1 / RADIAN_FACTOR
-        lat2 = a2.latitudeDegrees + a2.latitudeMinutes / 60.0
+        lat2 = a2.latitude_degrees + a2.latitude_minutes / 60.0
         lat2 = lat2 / RADIAN_FACTOR
-        long2 = -a2.longitudeDegrees + a2.longitudeMinutes / 60.0
+        long2 = -a2.longitude_degrees + a2.longitude_minutes / 60.0
         long2 = long2 / RADIAN_FACTOR
 
         x = (

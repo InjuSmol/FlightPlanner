@@ -1,18 +1,19 @@
 from Airport import Airport
-from pyTPS import pyTPS
+from PyTPS import PyTPS
 from WeightedGraph import WeightedGraph
 import readline
-from AppendStop_Transaction import AppendStop_Transaction
+from AppendStopTransaction import AppendStopTransaction
 import json
 
-tps = pyTPS()
-airportGraph = WeightedGraph()
+tps = PyTPS()
+airport_graph = WeightedGraph()
 stops = []
 
-def displayAirports():
+
+def display_airports():
     print("\n\nAIRPORTS YOU CAN TRAVEL TO AND FROM:\n")
     codes = []
-    airportGraph.getKeys(codes)
+    airport_graph.get_keys(codes)
     text = ""
     for i in range(len(codes)):
         if (i % 10) == 0:
@@ -25,46 +26,48 @@ def displayAirports():
     text += "\n\n"
     print(text)
 
-def displayCurrentTrip():
+
+def display_current_trip():
     text = ""
     text += "Current Trip Stops: \n"
     for i in range(len(stops)):
         text += "\t" + str(i + 1) + ". " + stops[i] + "\n"
     text += "\nCurrent Trip Legs: \n"
-    legNum = 1
-    tripDistance = 0.0
+    leg_num = 1
+    trip_distance = 0.0
     for i in range(len(stops)):
-        legDistance = 0.0
+        leg_distance = 0.0
 
-        if legNum < len(stops):
+        if leg_num < len(stops):
             text += "\t" + str(i + 1) + '. '
 
-            lastStop = stops[legNum - 1]
+            last_stop = stops[leg_num - 1]
 
-            nextStop = stops[legNum]
+            next_stop = stops[leg_num]
 
             route = []
-            airportGraph.findPath(route, lastStop, nextStop)
+            airport_graph.find_path(route, last_stop, next_stop)
 
             if len(route) < 2:
-                text += "No Route Found from " + lastStop + " to " + nextStop + "\n"
+                text += "No Route Found from " + last_stop + " to " + next_stop + "\n"
             else:
                 for i in range(len(route) - 1):
-                    a1 = airportGraph.getNodeData(route[i])
-                    a2 = airportGraph.getNodeData(route[i + 1])
+                    a1 = airport_graph.get_node_data(route[i])
+                    a2 = airport_graph.get_node_data(route[i + 1])
                     distance = Airport.calculateDistance(a1, a2)
-                    legDistance += distance
+                    leg_distance += distance
                     if i == 0:
                         text += a1.getCode()
                     text += "-" + a2.getCode()
-                text += " (Leg Distance: " + str(legDistance) + " miles)\n"
+                text += " (Leg Distance: " + str(leg_distance) + " miles)\n"
 
-            legNum += 1
-            tripDistance += legDistance
-    text += "Total Trip Distance: " + str(tripDistance) + " miles\n\n"
+            leg_num += 1
+            trip_distance += leg_distance
+    text += "Total Trip Distance: " + str(trip_distance) + " miles\n\n"
     print(text)
 
-def displayMenu():
+
+def display_menu():
     text = "ENTER A SELECTION\n"
     text += "S) Add a Stop to your Trip\n"
     text += "U) Undo\n"
@@ -73,6 +76,7 @@ def displayMenu():
     text += "Q) Quit\n"
     print(text)
 
+
 def process_user_input():
     # GET THE USER SELECTION
     entry = input()
@@ -80,9 +84,9 @@ def process_user_input():
     if entry == "S":
         print("\nEnter the Airport Code: ")
         entry = input()
-        if airportGraph.node_exists(entry):
+        if airport_graph.node_exists(entry):
             neighbors = []
-            airportGraph.get_neighbors(neighbors, entry)
+            airport_graph.get_neighbors(neighbors, entry)
 
             # MAKE SURE IT IS NOT THE SAME AIRPORT CODE AS THE PREVIOUS STOP
             if len(stops) > 0:
@@ -90,10 +94,10 @@ def process_user_input():
                 if last_stop == entry:
                     print("DUPLICATE STOP ERROR - NO STOP ADDED")
                 else:
-                    transaction = AppendStop_Transaction(stops, entry)
+                    transaction = AppendStopTransaction(stops, entry)
                     tps.add_transaction(transaction)
             else:
-                transaction = AppendStop_Transaction(stops, entry)
+                transaction = AppendStopTransaction(stops, entry)
                 tps.add_transaction(transaction)
         else:
             print("INVALID AIRPORT CODE ERROR - NO STOP ADDED")
@@ -141,28 +145,31 @@ def process_user_input():
 #         return False
 #     return True
 
-def initAllAirports():
+
+def init_all_airports():
     with open('../data/Flights.json', 'r') as file:
-        airportData = json.load(file)
-        for airportJSON in airportData['airports']:
-            newAirport = Airport(airportJSON['code'], airportJSON['latitudeDegrees'], airportJSON['latitudeMinutes'], airportJSON['longitudeDegrees'], airportJSON['longitudeMinutes'])
-            airportGraph.addNode(airportJSON['code'], newAirport)
+        airport_data = json.load(file)
+        for airportJSON in airport_data['airports']:
+            new_airport = Airport(airportJSON['code'], airportJSON['latitudeDegrees'], airportJSON['latitudeMinutes'], airportJSON['longitudeDegrees'], airportJSON['longitudeMinutes'])
+            airport_graph.add_node(airportJSON['code'], new_airport)
 
-        for edgeJSON in airportData['edges']:
-            initEdge(edgeJSON[0], edgeJSON[1])
+        for edgeJSON in airport_data['edges']:
+            init_edge(edgeJSON[0], edgeJSON[1])
 
-def initEdge(node1, node2):
-    a1 = airportGraph.getNodeData(node1)
-    a2 = airportGraph.getNodeData(node2)
+
+def init_edge(node1, node2):
+    a1 = airport_graph.get_node_data(node1)
+    a2 = airport_graph.get_node_data(node2)
     distance = Airport.calculateDistance(a1, a2)
-    airportGraph.addEdge(node1, node2, distance)
-    airportGraph.addEdge(node2, node1, distance)
+    airport_graph.add_edge(node1, node2, distance)
+    airport_graph.add_edge(node2, node1, distance)
 
-initAllAirports()
+
+init_all_airports()
 
 keepGoing = True
 while keepGoing:
-    displayAirports()
-    displayCurrentTrip()
-    displayMenu()
+    display_airports()
+    display_current_trip()
+    display_menu()
     keepGoing = process_user_input()
