@@ -54,7 +54,7 @@ def display_current_trip():
                 for i in range(len(route) - 1):
                     a1 = airport_graph.get_node_data(route[i])
                     a2 = airport_graph.get_node_data(route[i + 1])
-                    distance = Airport.calculateDistance(a1, a2)
+                    distance = Airport.calculate_distance(a1, a2)
                     leg_distance += distance
                     if i == 0:
                         text += a1.getCode()

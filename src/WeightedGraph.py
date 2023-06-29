@@ -78,7 +78,7 @@ class WeightedGraph:
                 if test_neighbor not in visited:
                     id1 = self.get_edge_id(last, test_neighbor)
                     edge = self.edges[id1]
-                    if edge.getWeight() < closest_distance:
+                    if edge.get_weight() < closest_distance:
                         closest_index = i
                         closest_distance = edge.getWeight()
 
