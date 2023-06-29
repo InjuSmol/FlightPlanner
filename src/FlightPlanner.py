@@ -9,7 +9,7 @@ airport_graph = WeightedGraph()
 stops = []
 
 
-def display_airports():
+def display_airports() -> None:
     print("\n\nAIRPORTS YOU CAN TRAVEL TO AND FROM:\n")
     codes = []
     airport_graph.get_keys(codes)
@@ -26,7 +26,7 @@ def display_airports():
     print(text)
 
 
-def display_current_trip():
+def display_current_trip() -> None:
     text = ""
     text += "Current Trip Stops: \n"
     for i in range(len(stops)):
@@ -66,7 +66,7 @@ def display_current_trip():
     print(text)
 
 
-def display_menu():
+def display_menu() -> None:
     text = "ENTER A SELECTION\n"
     text += "S) Add a Stop to your Trip\n"
     text += "U) Undo\n"
@@ -76,7 +76,7 @@ def display_menu():
     print(text)
 
 
-def process_user_input():
+def process_user_input() -> bool:
     entry = input()
 
     if entry == "S":
@@ -110,7 +110,7 @@ def process_user_input():
     return True
 
 
-def init_all_airports():
+def init_all_airports() -> None:
     with open('../data/Flights.json', 'r') as file:
         airport_data = json.load(file)
         for airportJSON in airport_data['airports']:
