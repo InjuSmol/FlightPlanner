@@ -1,6 +1,7 @@
 from WeightedEdge import WeightedEdge
 from typing import List
 import math
+from collections import deque
 
 
 class WeightedGraph:
@@ -52,39 +53,57 @@ class WeightedGraph:
             return self.edges[edge_id].get_weight()
         return 0
 
-    def find_path(self, path: List[str], node1: str, node2: str) -> None:
-        print("Finding path from " + node1 + " to " + node2 + "\n")
+    def find_path(self, path, node1, node2):
+        print(f"Finding path from {node1} to {node2}")
 
-        if node1 not in self.nodes or node2 not in self.nodes:
+        if not self.node_exists(node1) or not self.node_exists(node2):
             return
 
         path.append(node1)
+        visited = {node1}
 
-        visited = {node1: node1}
+        direct_edge_id = self.get_edge_id(node1, node2)
+        direct_edge = self.edges.get(direct_edge_id)
+        if direct_edge:
+            path.append(node2)
+            return
 
-        while path:
-            last = path[-1]
+        distances = {node: float('inf') for node in self.nodes}
+        distances[node1] = 0
+        previous = {}
 
-            neighbors = []
-            self.get_neighbors(neighbors, last)
+        queue = deque()
+        queue.append(node1)
 
-            closest_index = -1
-            closest_distance = math.inf
-            for i, test_neighbor in enumerate(neighbors):
-                if test_neighbor == node2:
-                    path.append(test_neighbor)
-                    return
+        while queue:
+            current = queue.popleft()
+            current_distance = distances[current]
+            if current == node2:
+                self.path_h(previous, node1, node2, path)
+                return
 
-                if test_neighbor not in visited:
-                    id1 = self.get_edge_id(last, test_neighbor)
-                    edge = self.edges[id1]
-                    if edge.get_weight() < closest_distance:
-                        closest_index = i
-                        closest_distance = edge.get_weight()
+            neighbors = list()
+            self.get_neighbors(neighbors, current)
 
-            if closest_index >= 0:
-                closest_node = neighbors[closest_index]
-                visited[closest_node] = closest_node
-                path.append(closest_node)
-            elif path:
-                path.pop()
+            for neighbor in neighbors:
+                edge_id = self.get_edge_id(current, neighbor)
+                weight = self.edges[edge_id].get_weight()
+                distance_to_neighbor = current_distance + weight
+
+                if distance_to_neighbor < distances[neighbor]:
+                    distances[neighbor] = distance_to_neighbor
+                    previous[neighbor] = current
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+
+
+    def path_h(self, previous1, start, end, path2):
+        current = end
+        leg_path = []
+        while current != start:
+            leg_path.insert(0, current)
+            current = previous1[current]
+        path2.extend(leg_path)
+f
+
+
