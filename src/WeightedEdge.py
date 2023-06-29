@@ -1,14 +1,14 @@
 class WeightedEdge:
-    def __init__(self, initNode1: str, initNode2: str, initWeight: float):
-        self.node1 = initNode1
-        self.node2 = initNode2
-        self.weight = initWeight
+    def __init__(self, init_node1: str, init_node2: str, init_weight: float):
+        self.node1 = init_node1
+        self.node2 = init_node2
+        self.weight = init_weight
     
-    def getNode1(self) -> str:
+    def get_node1(self) -> str:
         return self.node1
     
-    def getNode2(self) -> str:
+    def get_node2(self) -> str:
         return self.node2
     
-    def getWeight(self) -> float:
+    def get_weight(self) -> float:
         return self.weight

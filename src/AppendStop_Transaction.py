@@ -1,4 +1,4 @@
-from pyTPS_Transaction import pyTPS_Transaction
+from PyTPSTransaction import pyTPS_Transaction
 
 class AppendStop_Transaction(pyTPS_Transaction):
     def __init__(self, initStops, initCode):
