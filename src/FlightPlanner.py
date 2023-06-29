@@ -41,7 +41,6 @@ def display_current_trip() -> None:
             text += "\t" + str(i + 1) + '. '
 
             last_stop = stops[leg_num - 1]
-
             next_stop = stops[leg_num]
 
             route = []
@@ -58,12 +57,16 @@ def display_current_trip() -> None:
                     if i == 0:
                         text += a1.get_code()
                     text += "-" + a2.get_code()
-                text += " (Leg Distance: " + str(leg_distance) + " miles)\n"
+                formatted_leg_distance = "{:.3f}".format(leg_distance)
+                text += " (Leg Distance: " + formatted_leg_distance + " miles)\n"
 
             leg_num += 1
             trip_distance += leg_distance
-    text += "Total Trip Distance: " + str(trip_distance) + " miles\n\n"
+
+    formatted_trip_distance = "{:.3f}".format(trip_distance)
+    text += "Total Trip Distance: " + formatted_trip_distance + " miles\n\n"
     print(text)
+
 
 
 def display_menu() -> None:
