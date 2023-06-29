@@ -16,7 +16,7 @@ class WeightedGraph:
         return test_node in self.nodes
 
     def get_edge_id(self, node1: str, node2: str) -> str:
-        return node1 + "-" + node2
+        return f"{node1}-{node2}"
 
     def add_node(self, node_id: str, node_data: any) -> None:
         self.nodes[node_id] = node_data
