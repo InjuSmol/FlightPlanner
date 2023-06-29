@@ -50,7 +50,8 @@ class PyTPS:
             self.performing_undo = False
 
     def clear_all_transactions(self) -> None:
-        self.transactions = []
+        # self.transactions = []
+        self.transactions.clear()
         self.most_recent_transaction = -1
         self.num_transactions = 0
 

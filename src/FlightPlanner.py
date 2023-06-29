@@ -1,7 +1,6 @@
 from Airport import Airport
 from PyTPS import PyTPS
 from WeightedGraph import WeightedGraph
-import readline
 from AppendStopTransaction import AppendStopTransaction
 import json
 
@@ -107,43 +106,10 @@ def process_user_input():
         tps.do_transaction()
     elif entry == "E":
         tps.clear_all_transactions()
+        stops.clear()
     elif entry == "Q":
         return False
     return True
-
-# def getUserInput(prompt):
-#     answer = input(prompt)
-#     return answer
-#
-# def processUserInput():
-#     choice = getUserInput("-")
-#     if choice == "S":
-#         enteredCode = getUserInput("\nEnter the Airport Code: ")
-#         if airportGraph.nodeExists(enteredCode):
-#             neighbors = []
-#             airportGraph.getNeighbors(neighbors, enteredCode)
-#
-#             if len(stops) > 0:
-#                 lastStop = stops[-1]
-#                 if lastStop == enteredCode:
-#                     print("DUPLICATE STOP ERROR - NO STOP ADDED")
-#                 else:
-#                     transaction = AppendStop_Transaction(stops, enteredCode)
-#                     tps.addTransaction(transaction)
-#             else:
-#                 transaction = AppendStop_Transaction(stops, enteredCode)
-#                 tps.addTransaction(transaction)
-#         else:
-#             print("INVALID AIRPORT CODE ERROR - NO STOP ADDED")
-#     elif choice == "U":
-#         tps.undoTransaction()
-#     elif choice == "R":
-#         tps.doTransaction()
-#     elif choice == "E":
-#         tps.clearAllTransactions()
-#     elif choice == "Q":
-#         return False
-#     return True
 
 
 def init_all_airports():
