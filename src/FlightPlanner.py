@@ -77,7 +77,6 @@ def display_menu():
 
 
 def process_user_input():
-    # GET THE USER SELECTION
     entry = input()
 
     if entry == "S":
@@ -87,7 +86,6 @@ def process_user_input():
             neighbors = []
             airport_graph.get_neighbors(neighbors, entry)
 
-            # MAKE SURE IT IS NOT THE SAME AIRPORT CODE AS THE PREVIOUS STOP
             if len(stops) > 0:
                 last_stop = stops[-1]
                 if last_stop == entry:
@@ -123,7 +121,7 @@ def init_all_airports():
             init_edge(edgeJSON[0], edgeJSON[1])
 
 
-def init_edge(node1, node2):
+def init_edge(node1: str, node2: str) -> None:
     a1 = airport_graph.get_node_data(node1)
     a2 = airport_graph.get_node_data(node2)
     distance = Airport.calculate_distance(a1, a2)
