@@ -1,6 +1,5 @@
 from WeightedEdge import WeightedEdge
 from typing import List
-import math
 from collections import deque
 
 
@@ -96,7 +95,6 @@ class WeightedGraph:
                     visited.add(neighbor)
                     queue.append(neighbor)
 
-
     def path_h(self, previous1, start, end, path2):
         current = end
         leg_path = []
@@ -104,6 +102,6 @@ class WeightedGraph:
             leg_path.insert(0, current)
             current = previous1[current]
         path2.extend(leg_path)
-f
+
 
 
