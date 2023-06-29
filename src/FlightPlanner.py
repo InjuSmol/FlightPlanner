@@ -57,8 +57,8 @@ def display_current_trip():
                     distance = Airport.calculate_distance(a1, a2)
                     leg_distance += distance
                     if i == 0:
-                        text += a1.getCode()
-                    text += "-" + a2.getCode()
+                        text += a1.get_code()
+                    text += "-" + a2.get_code()
                 text += " (Leg Distance: " + str(leg_distance) + " miles)\n"
 
             leg_num += 1
